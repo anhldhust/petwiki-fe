@@ -1,65 +1,108 @@
-import Image from "next/image";
+'use client';
+
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 export default function Home() {
+  const [query, setQuery] = useState('');
+  const router = useRouter();
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (query.trim()) {
+      router.push(`/dictionary?q=${encodeURIComponent(query)}`);
+    }
+  };
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
+    <div className="relative">
+      {/* Hero Section */}
+      <section className="relative h-[600px] flex items-center justify-center overflow-hidden">
+        <div className="absolute inset-0 z-0">
+          <img 
+            src="https://picsum.photos/id/1025/1600/900" 
+            alt="Hero Background" 
+            className="w-full h-full object-cover brightness-50"
+          />
+        </div>
+        <div className="relative z-10 text-center px-4 max-w-3xl">
+          <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 drop-shadow-lg">
+            Every Pet Has a Story.
           </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+          <p className="text-xl text-white mb-8 opacity-90 leading-relaxed drop-shadow-md">
+            Dive into the world of dogs and cats. From loyal companions to curious felines, discover everything you need to know about your favorite breeds.
           </p>
+          
+          <form onSubmit={handleSearch} className="flex flex-col sm:flex-row gap-2 max-w-xl mx-auto">
+            <div className="relative flex-grow">
+              <i className="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
+              <input 
+                type="text" 
+                placeholder="Search breeds (e.g., Golden Retriever, Siamese)..."
+                className="w-full pl-12 pr-4 py-4 rounded-xl text-gray-800 focus:outline-none focus:ring-2 focus:ring-orange-400 shadow-xl"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+              />
+            </div>
+            <button className="bg-orange-500 hover:bg-orange-600 text-white font-bold px-8 py-4 rounded-xl transition-all shadow-xl active:scale-95">
+              Explore
+            </button>
+          </form>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+      </section>
+
+      {/* Featured Categories */}
+      <section className="max-w-7xl mx-auto px-4 py-20">
+        <div className="text-center mb-16">
+          <h2 className="text-4xl font-bold text-gray-800 mb-4">Discover by Category</h2>
+          <div className="w-24 h-1 bg-orange-400 mx-auto"></div>
         </div>
-      </main>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div 
+            onClick={() => router.push('/dictionary?type=dog')}
+            className="group relative h-80 rounded-3xl overflow-hidden cursor-pointer shadow-2xl transition-transform hover:-translate-y-2"
+          >
+            <img src="https://picsum.photos/id/237/800/600" alt="Dogs" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-8">
+              <h3 className="text-3xl font-bold text-white mb-2">Canine Kingdom</h3>
+              <p className="text-gray-200">Man's best friend in every shape and size.</p>
+            </div>
+          </div>
+
+          <div 
+            onClick={() => router.push('/dictionary?type=cat')}
+            className="group relative h-80 rounded-3xl overflow-hidden cursor-pointer shadow-2xl transition-transform hover:-translate-y-2"
+          >
+            <img src="https://picsum.photos/id/40/800/600" alt="Cats" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-8">
+              <h3 className="text-3xl font-bold text-white mb-2">Feline Friends</h3>
+              <p className="text-gray-200">Elegant hunters and cuddly companions.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Quick Facts Section */}
+      <section className="bg-orange-50 py-20">
+        <div className="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-12">
+          <div className="bg-white p-8 rounded-2xl shadow-lg text-center">
+            <div className="text-4xl text-orange-500 mb-4"><i className="fas fa-book-open"></i></div>
+            <h4 className="text-xl font-bold mb-2">Breed Encyclopedia</h4>
+            <p className="text-gray-600">Comprehensive guides for hundreds of breeds worldwide.</p>
+          </div>
+          <div className="bg-white p-8 rounded-2xl shadow-lg text-center">
+            <div className="text-4xl text-orange-500 mb-4"><i className="fas fa-history"></i></div>
+            <h4 className="text-xl font-bold mb-2">Rich History</h4>
+            <p className="text-gray-600">Learn about origins and the legacy of each companion.</p>
+          </div>
+          <div className="bg-white p-8 rounded-2xl shadow-lg text-center">
+            <div className="text-4xl text-orange-500 mb-4"><i className="fas fa-images"></i></div>
+            <h4 className="text-xl font-bold mb-2">AI Gallery</h4>
+            <p className="text-gray-600">See and generate amazing pet content on the fly.</p>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }
