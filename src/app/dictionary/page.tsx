@@ -1,12 +1,12 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { getBreedList, searchBreeds } from '@/services/geminiService';
 import { BreedSummary, PetType } from '@/types';
 import Link from 'next/link';
 
-export default function Dictionary() {
+function DictionaryContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const [breeds, setBreeds] = useState<BreedSummary[]>([]);
@@ -97,6 +97,21 @@ export default function Dictionary() {
         </div>
       )}
     </div>
+  );
+}
+
+export default function Dictionary() {
+  return (
+    <Suspense fallback={
+      <div className="max-w-7xl mx-auto px-4 py-12">
+        <div className="flex flex-col items-center justify-center py-24 space-y-4">
+          <div className="animate-spin text-4xl text-orange-500"><i className="fas fa-paw"></i></div>
+          <p className="text-gray-600 font-medium">Loading...</p>
+        </div>
+      </div>
+    }>
+      <DictionaryContent />
+    </Suspense>
   );
 }
 

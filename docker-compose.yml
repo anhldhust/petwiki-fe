@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  petwiki-fe:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: petwiki-fe
+    ports:
+      - "3080:3000"
+    environment:
+      - NODE_ENV=production
+      - NEXT_TELEMETRY_DISABLED=1
+    restart: unless-stopped
+    networks:
+      - petwiki-fe-network
+    volumes:
+      # Mount public assets if needed for development
+      - ./public:/app/public:ro
+
+networks:
+  petwiki-fe-network:
+    driver: bridge
+
+volumes:
+  petwiki-fe-data: 
