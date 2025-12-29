@@ -30,3 +30,5 @@ export interface GalleryItem {
   prompt?: string;
 }
 
+
+

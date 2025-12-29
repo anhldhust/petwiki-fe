@@ -156,3 +156,5 @@ export const generatePetVideo = async (prompt: string): Promise<string> => {
   return URL.createObjectURL(blob);
 };
 
+
+

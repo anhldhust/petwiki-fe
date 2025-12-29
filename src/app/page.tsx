@@ -39,7 +39,7 @@ export default function Home() {
               <input 
                 type="text" 
                 placeholder="Search breeds (e.g., Golden Retriever, Siamese)..."
-                className="w-full pl-12 pr-4 py-4 rounded-xl text-gray-800 focus:outline-none focus:ring-2 focus:ring-orange-400 shadow-xl"
+                className="w-full pl-12 pr-4 py-4 rounded-xl bg-white text-gray-800 focus:outline-none focus:ring-2 focus:ring-orange-400 shadow-xl"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
               />

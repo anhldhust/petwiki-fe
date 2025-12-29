@@ -130,3 +130,5 @@ const BreedCard: React.FC<{ breed: BreedSummary }> = ({ breed }) => {
   );
 };
 
+
+
